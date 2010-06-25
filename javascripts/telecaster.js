@@ -13,11 +13,22 @@ var TcDb = Class.create({
       t.executeSql("CREATE TABLE IF NOT EXISTS files(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, content TEXT)");
     });
   },
-  select: function(q) {
-
+  select: function(q, a, cb) {
+    this.db.transaction(function(t){
+      t.executeSql(q, a, cb);
+    });
   },
-  selectHandler: function(t, r) {
-
+  update: function(q, a) {
+    this.db.transaction(function(t){
+      t.executeSql(q, a);
+    });
+  },
+  create: function(q, a, cb) {
+    this.db.transaction(function(t){
+      t.executeSql(q, a, cb, function(t, e){
+        console.error(e.message);
+      });
+    });
   }
 });
 
