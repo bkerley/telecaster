@@ -1,1 +1,0 @@
-use Rack::Static, :root=>'outpu'
