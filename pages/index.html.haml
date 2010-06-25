@@ -4,12 +4,13 @@
   %meta(name='viewport' content='width=device-width')
   %link(rel="stylesheet" href="stylesheets/telecaster.css" type="text/css" media="screen" charset="utf-8")
 %body
-  %ul#files
-  .editor
+  .file_box
+    %ul#files
+  .editor_box
     %p.chrome
       %input#filename
       %span#save_button Save
-    %textarea#editor(rows='14' cols='80')
+    %textarea#editor
   %script(type='text/javascript' src='javascripts/prototype.js')
   %script(type='text/javascript' src='javascripts/telecaster.js')
   :javascript
