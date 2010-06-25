@@ -40,7 +40,11 @@ body
   textarea
     :width 600px
     :height 200px
-ul#files
-  :min-height 10px
-  :background-color #ddf
-  :padding-left 0
+    :font-family = !mono_font
+  &.ipad_focus
+    .chrome
+      span#save_button
+        :position absolute
+        :left 0
+        :top 20px
+        :font-size 3em

@@ -39,6 +39,7 @@ var TcCtl = Class.create({
 
     this.startFileList();
     this.startEditor();
+    this.startIpad();
   },
   startFileList: function() {
     var l = this.fileList;
@@ -63,10 +64,24 @@ var TcCtl = Class.create({
   startEditor: function() {
     var chrome = $('editor').up().down('.chrome');
     this.nameField = chrome.down('input#filename');
-    this.saveButton = chrome.down('#save_button');
-    this.saveButton.on('click', function(e) {
+    chrome.down('#save_button').on('click', function(e) {
       this.saveFile();
     }.bind(this));
+    chrome.down('#eval_button').on('click', function(e) {
+      this.evalFile();
+    }.bind(this));
+  },
+  startIpad: function() {
+    if (!navigator.userAgent.match(/iPad/)) return;
+    this.editor.on('focus', function(e) {
+      $('editor').up().addClassName('ipad_focus');
+    });
+    this.editor.on('blur', function(e) {
+      var rcn = function(){
+        $('editor').up().removeClassName('ipad_focus');
+      };
+      window.setTimeout(rcn, 500);
+    });
   },
   saveFile: function() {
     var content = this.editor.value;
@@ -81,6 +96,9 @@ var TcCtl = Class.create({
     this.editor.value = file.content;
     this.nameField.value = file.name;
     this.file = file;
+  },
+  evalFile: function(file) {
+    window.eval(this.editor.value);
   },
   updateFileList: function() {
     var l = this.fileList;
