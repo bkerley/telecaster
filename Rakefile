@@ -45,6 +45,9 @@ task :stylesheets => STYLESHEET_OUTPUT
 desc "Build javascripts."
 task :javascripts => JAVASCRIPT_OUTPUT
 
+desc "Build images."
+task :images
+
 desc "Set SASS to the compressed output style."
 task :compress do
   $sass_mode = '-t compressed'
