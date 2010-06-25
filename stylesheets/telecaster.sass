@@ -1,9 +1,42 @@
+!body_font= "Helvetica Neue", "Helvetica", "sans", "Arial"
+!mono_font= "Monaco", "Vera Sans Mono", "Lucida Console", "Courier", "mono", "Courier New"
+body
+  :font-family = !body_font
+  :padding 0
+  :margin 0
 .file_box
   :float left
   :width 140px
+  :height 220px
+  :background-color #ddf
+  :padding-right 2px
+  h1
+    :font-size 14px
+    :border-bottom 2px solid black
+    :padding-left 2px
+  ul#files
+    :min-height 10px
+    :padding-left 2px
+    :font-family = !mono_font
+    li.new
+      :background-color #dfd
 .editor_box
   :float left
   :width 600px
+  .chrome
+    input#filename
+      :font-family = !mono_font
+      :width 100px
+    span.button
+      :display inline
+      :display inline-block
+      :background-color #ddd
+      :border 1px solid black
+      :padding 2px
+      :font-size smaller
+      :cursor default
+      &:hover
+        :background-color #eee
   textarea
     :width 600px
     :height 200px

@@ -5,11 +5,13 @@
   %link(rel="stylesheet" href="stylesheets/telecaster.css" type="text/css" media="screen" charset="utf-8")
 %body
   .file_box
+    %h1 Telecaster
     %ul#files
   .editor_box
-    %p.chrome
+    .chrome
       %input#filename
-      %span#save_button Save
+      %span.button#save_button Save
+      %span.button#eval_button Eval
     %textarea#editor
   %script(type='text/javascript' src='javascripts/prototype.js')
   %script(type='text/javascript' src='javascripts/telecaster.js')
