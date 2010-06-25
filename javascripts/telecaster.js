@@ -38,33 +38,105 @@ var TcCtl = Class.create({
     this.editor = $('editor');
 
     this.startFileList();
+    this.startEditor();
   },
   startFileList: function() {
     var l = this.fileList;
-    l.update('');
+    l.update("<li class=\"new\">New File</li>");
+
     var files = TcFile.all(function(r) {
-      l.insert({bottom: "<li id=\"file_"+r.id+"\">"+r.name+"</li>"});
+      l.insert({bottom: "<li class=\"existing\" id=\"file_"+r.id+"\">"+r.name+"</li>"});
+    });
+
+    l.on('click', 'li.existing', function(e, li) {
+      var fileId = li.id.split('_')[1];
+      TcFile.one(fileId, function(f) {
+        this.loadFile(f);
+      }.bind(this));
+    }.bind(this));
+    l.on('click', 'li.new', function(e, li) {
+      this.loadFile(TcFile.blank());
+    }.bind(this));
+
+    this.file = TcFile.blank();
+  },
+  startEditor: function() {
+    var chrome = $('editor').up().down('.chrome');
+    this.nameField = chrome.down('input#filename');
+    this.saveButton = chrome.down('#save_button');
+    this.saveButton.on('click', function(e) {
+      this.saveFile();
+    }.bind(this));
+  },
+  saveFile: function() {
+    var content = this.editor.value;
+    var filename = this.nameField.value;
+    var file = this.file;
+    file.name = filename;
+    file.content = content;
+    file.save();
+    this.updateFileList();
+  },
+  loadFile: function(file) {
+    this.editor.value = file.content;
+    this.nameField.value = file.name;
+    this.file = file;
+  },
+  updateFileList: function() {
+    var l = this.fileList;
+    l.update("<li class=\"new\">New File</li>");
+
+    var files = TcFile.all(function(r) {
+      l.insert({bottom: "<li class=\"existing\" id=\"file_"+r.id+"\">"+r.name+"</li>"});
     });
   }
 });
 
 var TcFile = Class.create({
   initialize: function(row) {
-    this.dirty = false;
     this.id = row.id;
-    this.name = row.filename;
+    this.name = row.name;
     this.content = row.content;
   },
   reload: function() {
     this.content = Telecaster.db.loadFile(this.name);
+  },
+  save: function() {
+    if (this.blank) {
+      Telecaster.db.create("INSERT INTO files (name, content) VALUES (?, ?)", [this.name, this.content], function(){
+        this.blank = false;
+      }.bind(this));
+    } else {
+      Telecaster.db.update("UPDATE files SET name=? content=? WHERE id=?", [this.name, this.content, this.id]);
+    }
+    this.blank = false;
   }
 });
 Object.extend(TcFile, {
   all: function(cb) {
-    Telecaster.db.select("SELECT * FROM files ORDER BY filename ASC",
-      function(r) {
-        var f = new TcFile(r);
-        cb(r);
-      });
-    }
+    Telecaster.db.select("SELECT * FROM files ORDER BY name ASC", [],
+                         function(t, r) {
+                           var l = r.rows.length;
+                           for(i = 0; i < l; i++) {
+                             var f = new TcFile(r.rows.item(i));
+                             cb(f);
+                           }
+                         });
+  },
+  one: function(id, cb) {
+    Telecaster.db.select("SELECT * FROM files WHERE id=? LIMIT 1", [id],
+                         function(t, r) {
+                           var f = new TcFile(r.rows.item(0));
+                           cb(f);
+                         });
+  },
+  blank: function() {
+    var f = new TcFile({
+      id: null,
+      name: '',
+      content: ''
+    });
+    f.blank = true;
+    return f;
+  }
 });
