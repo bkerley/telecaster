@@ -7,7 +7,7 @@ body
 .file_box
   :float left
   :width 140px
-  :height 220px
+  :min-height 220px
   :background-color #ddf
   :padding-right 2px
   h1
@@ -16,14 +16,20 @@ body
     :padding-left 2px
   ul#files
     :min-height 10px
-    :padding-left 2px
     :font-family = !mono_font
-    li.new
-      :background-color #dfd
+    :list-style-type none
+    :padding-left 2px
+    :overflow auto
+    li
+      :padding 4px 2px
+      :margin-bottom 4px
+      &.new
+        :background-color #dfd
 .editor_box
   :float left
   :width 600px
   .chrome
+    :font-size larger
     input#filename
       :font-family = !mono_font
       :width 100px
@@ -33,8 +39,8 @@ body
       :background-color #ddd
       :border 1px solid black
       :padding 2px
-      :font-size smaller
       :cursor default
+      :font-size smaller
       &:hover
         :background-color #eee
   textarea
