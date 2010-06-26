@@ -1,0 +1,54 @@
+body {
+  font-family: Helvetica Neue, Helvetica, sans, Arial;
+  padding: 0;
+  margin: 0; }
+
+.file_box {
+  float: left;
+  width: 140px;
+  min-height: 220px;
+  background-color: #ddf;
+  padding-right: 2px; }
+  .file_box h1 {
+    font-size: 14px;
+    border-bottom: 2px solid black;
+    padding-left: 2px; }
+  .file_box ul#files {
+    min-height: 10px;
+    font-family: Monaco, Vera Sans Mono, Lucida Console, Courier, mono, Courier New;
+    list-style-type: none;
+    padding-left: 2px;
+    overflow: auto; }
+    .file_box ul#files li {
+      padding: 4px 2px;
+      margin-bottom: 4px; }
+      .file_box ul#files li.new {
+        background-color: #dfd; }
+
+.editor_box {
+  float: left;
+  width: 600px; }
+  .editor_box .chrome {
+    font-size: larger; }
+    .editor_box .chrome input#filename {
+      font-family: Monaco, Vera Sans Mono, Lucida Console, Courier, mono, Courier New;
+      width: 100px; }
+    .editor_box .chrome span.button {
+      display: inline;
+      display: inline-block;
+      background-color: #ddd;
+      border: 1px solid black;
+      padding: 2px;
+      cursor: default;
+      font-size: smaller; }
+      .editor_box .chrome span.button:hover {
+        background-color: #eee; }
+  .editor_box textarea {
+    width: 600px;
+    height: 200px;
+    font-family: Monaco, Vera Sans Mono, Lucida Console, Courier, mono, Courier New; }
+  .editor_box.ipad_focus .chrome span#save_button {
+    position: absolute;
+    left: 0;
+    top: 20px;
+    font-size: 3em; }
