@@ -1,1 +1,27 @@
-foo
+<!DOCTYPE html>
+<head>
+  <title>Telecaster</title>
+  <meta content='width=device-width' name='viewport' />
+  <link charset='utf-8' href='stylesheets/telecaster.css' media='screen' rel='stylesheet' type='text/css' />
+</head>
+<body>
+  <div class='file_box'>
+    <h1>Telecaster</h1>
+    <ul id='files'></ul>
+  </div>
+  <div class='editor_box'>
+    <div class='chrome'>
+      <input id='filename' />
+      <span class='button' id='save_button'>Save</span>
+      <span class='button' id='eval_button'>Eval</span>
+    </div>
+    <textarea id='editor'></textarea>
+  </div>
+  <script src='javascripts/prototype.js' type='text/javascript'></script>
+  <script src='javascripts/telecaster.js' type='text/javascript'></script>
+  <script type='text/javascript'>
+    //<![CDATA[
+      Telecaster();
+    //]]>
+  </script>
+</body>
