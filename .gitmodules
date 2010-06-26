@@ -1,3 +1,6 @@
 [submodule "vendor/prototype"]
 	path = vendor/prototype
 	url = http://github.com/sstephenson/prototype.git
+[submodule "output"]
+	path = output
+	url = git@github.com:bkerley/telecaster.git
