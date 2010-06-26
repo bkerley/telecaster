@@ -15,12 +15,16 @@ var TcDb = Class.create({
   },
   select: function(q, a, cb) {
     this.db.transaction(function(t){
-      t.executeSql(q, a, cb);
+      t.executeSql(q, a, cb, function(t, e){
+        console.error(e.message);
+      });
     });
   },
-  update: function(q, a) {
+  update: function(q, a, cb) {
     this.db.transaction(function(t){
-      t.executeSql(q, a);
+      t.executeSql(q, a, cb, function(t, e){
+        console.error(e.message);
+      });
     });
   },
   create: function(q, a, cb) {
@@ -121,11 +125,14 @@ var TcFile = Class.create({
   },
   save: function() {
     if (this.blank) {
-      Telecaster.db.create("INSERT INTO files (name, content) VALUES (?, ?)", [this.name, this.content], function(){
+      Telecaster.db.create("INSERT INTO files (name, content) VALUES (?, ?)", [this.name, this.content], function(t, r){
+        this.id = r.insertId;
         this.blank = false;
       }.bind(this));
     } else {
-      Telecaster.db.update("UPDATE files SET name=? content=? WHERE id=?", [this.name, this.content, this.id]);
+      Telecaster.db.update("UPDATE files SET name=?, content=? WHERE id=?", [this.name, this.content, this.id], function(t, r){
+
+      }.bind(this));
     }
     this.blank = false;
   }
